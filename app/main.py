@@ -4,6 +4,8 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from app.database import engine,Base
 from sqlalchemy import text
+# Import models so SQLAlchemy knows about them before creating tables
+from app.models import book
 
 # when you start and stop the server, you’ll see those log messages in the console
 @asynccontextmanager
@@ -40,3 +42,7 @@ app = FastAPI(
 @app.get("/")
 def read_root():
     return {"message": "📚 Library Management API is running successfully!"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("app.main:app", host="127.0.0.1", port=8001, log_level="info")
